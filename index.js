@@ -42,7 +42,7 @@ client.once('ready', () => {
 // 채팅 메시지가 올라왔을 때 감지하는 이벤트
 client.on('messageCreate', (message) => {
     // 봇이 쓴 글이거나 접두사(/)로 시작하지 않으면 무시
-    if (message.author.bot || !message.content.startsWith('/')) return;
+    if (message.author.bot || !message.content.startsWith('!')) return;
 
     // !명령어 에서 명령어 이름만 쏙 빼내기 (예: /핑 -> 핑)
     const args = message.content.slice(1).trim().split(/ +/);
