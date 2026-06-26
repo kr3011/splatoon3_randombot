@@ -45,7 +45,7 @@ client.on('messageCreate', (message) => {
     if (message.author.bot || !message.content.startsWith('/')) return;
 
     // !명령어 에서 명령어 이름만 쏙 빼내기 (예: /핑 -> 핑)
-    const args = message.content.slice(1).trim().split(/+/);
+    const args = message.content.slice(1).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     // 바구니에 일치하는 명령어가 없다면 무시
