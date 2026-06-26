@@ -13,9 +13,9 @@ http.createServer((req, res) => {
 // 봇 객체 생성 및 인텐트 설정
 const client = new Client({
     intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.Guilds,           // 서버 접속 권한
+        GatewayIntentBits.GuildMessages,    // 서버 메시지 수신 권한
+        GatewayIntentBits.MessageContent,   // 메시지 내용 읽기 권한 
     ]
 });
 
