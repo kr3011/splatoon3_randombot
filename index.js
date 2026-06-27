@@ -13,7 +13,7 @@ http.createServer((req, res) => {
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 
-const commandsPath = path.join(process.cwd(), 'commands');
+const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 // 💡 index.js에서는 등록 처리를 안 하므로 데이터 배열(commandsData)이나 

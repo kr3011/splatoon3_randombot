@@ -30,7 +30,7 @@ module.exports = async function deployCommands() {
     try {
         const CLIENT_ID = process.env.CLIENT_ID;
         const TEST_GUILD_ID = process.env.TEST_GUILD_ID;
-        console.log(TEST_GUILD_ID);
+        console.log(Boolean(TEST_GUILD_ID));
 
         // 1. 글로벌 명령어 등록
         console.log('🌐 일반 명령어를 글로벌로 배포합니다...');
@@ -40,7 +40,7 @@ module.exports = async function deployCommands() {
         );
 
         // 2. 테스트 서버 명령어 등록
-        if (TEST_GUILD_ID && guildCommands.length > 0) {
+        if (guildCommands.length > 0) {
             console.log('🔒 개발자 명령어를 테스트 서버에 배포합니다...');
             await rest.put(
             Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID),
