@@ -22,6 +22,13 @@ async function syncSplatoonWeapons() {
     throw new Error('올바르지 않은 데이터 형식입니다.', typeof externalWeapons);
   }
 
+    // 🔥 [핵심 추가] 애초에 원본 배열에서 오더 시리즈와 히어로 슈터를 영구 퇴출(필터링)시킵니다!
+  externalWeapons = externalWeapons.filter(w => {
+    const key = w.key?.toLowerCase() || '';
+    // 히어로 슈터 레플리카 및 오더(order) 단어가 들어간 무기는 가차 없이 탈락(false)
+    return key !== 'heroshooter_replica' && !key.includes('order');
+  });
+
   // 💡 [핵심 수정] 낡은 뼈대 규칙(인덱스 캐시)까지 아예 통째로 폭파(Drop)합니다.
   // 데이터베이스가 비어있을 때 에러가 나지 않도록 try-catch로 안전하게 감싸줍니다.
   try { await mongoose.connection.db.collection('weapons').drop(); } catch (e) {}
@@ -38,9 +45,6 @@ async function syncSplatoonWeapons() {
   for (const w of externalWeapons) {
     if (w.key) {
       if (!mainMap.has(w.key)) {
-        if (w.key.toLowerCase() === 'heroshooter_replica' || w.key.toLowerCase().includes('order')) {
-          continue; // 저장하지 않고 다음 무기로 넘어감
-        }
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
         const newMain = new MainWeapon({
           name_ja: w.name?.ja_JP || 'none',
