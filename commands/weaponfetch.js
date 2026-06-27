@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { syncSplatoonWeapons } = require('../services/loadweapon.js'); // 서비스 파일 로드
 
 module.exports = {
-  isGlobal: false, 
+  isGlobal: false,
   
   data: new SlashCommandBuilder()
     .setName('fetch')

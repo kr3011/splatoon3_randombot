@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
+    isGlobal: true,
+    
     // 디스코드 메뉴창에 등록될 명령어 정보
     data: new SlashCommandBuilder()
         .setName('bukichi') // 채팅창에 /핑 으로 표시됨 (대문자 불가, 영어/한글 가능)
