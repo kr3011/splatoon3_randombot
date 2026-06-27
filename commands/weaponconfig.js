@@ -25,10 +25,10 @@ module.exports = {
       const allowedIds = setting ? setting.allowedWeapons.map(id => id.toString()) : [];
 
       // 3. 질문자님의 황금 규칙에 맞춰 카테고리/사거리 정밀 필터링
-      const shortShooters = allWeapons.filter(w => w.category === '슈터' && w.matching_range <= 15);
-      const longShooters = allWeapons.filter(w => w.category === '슈터' && w.matching_range > 15);
-      const rollersAndBrushes = allWeapons.filter(w => w.category === '롤러' || w.category === '붓');
-      const brellasAndWipers = allWeapons.filter(w => w.category === '브렐라' || w.category === '와이퍼'); // 💡 API 카테고리명(한국어) 기준 매핑
+      const shortShooters = allWeapons.filter(w => w.category === 'shooter' && w.matching_range <= 15);
+      const longShooters = allWeapons.filter(w => w.category === 'shooter' && w.matching_range > 15);
+      const rollersAndBrushes = allWeapons.filter(w => w.category === 'roller' || w.category === 'brush');
+      const brellasAndWipers = allWeapons.filter(w => w.category === 'brella' || w.category === 'splatana'); // 💡 API 카테고리명(한국어) 기준 매핑
 
       // 4. 공용 옵션 주입기 함수 (반복 작업 최소화 및 문자열 세척)
       const addCleanOptions = (menu, weaponArray) => {
