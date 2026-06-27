@@ -7,12 +7,12 @@ const Weapon = require('../models/Weapon'); // 본인의 무기 스키마 경로
  */
 async function syncSplatoonWeapons() {
   // 1. 외부 오픈 API 데이터 호출
-  const response = await axios.get('https://stat.ink',
-    headers: {
-      'Accept': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' // 브라우저인 척 위장
-    }
-  ); 
+  const response = await axios.get('https://stat.ink/api/v3/weapon', {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' // 브라우저인 척 위장
+      }
+  });
   const externalWeapons = response.data;
   console.log(response.data[0]);
 
