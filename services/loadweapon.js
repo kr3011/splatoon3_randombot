@@ -9,6 +9,7 @@ async function syncSplatoonWeapons() {
   // 1. 외부 오픈 API 데이터 호출
   const response = await axios.get('https://stat.ink'); 
   const externalWeapons = response.data;
+  console.log(response.data);
 
   if (!Array.isArray(externalWeapons)) {
     throw new Error('올바르지 않은 데이터 형식입니다.');
