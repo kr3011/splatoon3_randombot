@@ -27,12 +27,12 @@ module.exports = {
         }
 
         // 팀별 텍스트 가공 처리 함수 (동일)
-        const formatTeamText = (weapons) => {
+        const formatTeamText = (weapons, teamName) => {
             return weapons.map((w, index) => {
                 const name = w.mainWeaponInfo?.name_ja;
                 if (!name) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
-                
-                return `**${name}**`;
+
+                return `**${teamName} ${index + 1}**\n┗ 🔫${name}`;
             }).join('\n');
         };
 
@@ -42,8 +42,8 @@ module.exports = {
             .setTitle(' Squid & Octo 4:4 Random Match ')
             .setDescription('4개씩 2번 독립적으로 추출된 팀별 무기 목록입니다.')
             .addFields(
-                { name: '💛 ', value: formatTeamText(alphaTeam), inline: true },
-                { name: '💜 ', value: formatTeamText(bravoTeam), inline: true }
+                { name: '💛 ', value: formatTeamText(alphaTeam, "Alpha"), inline: true },
+                { name: '💜 ', value: formatTeamText(bravoTeam, "Bravo"), inline: true }
             )
             .setFooter({ text: `요청자: ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
