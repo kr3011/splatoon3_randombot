@@ -42,8 +42,8 @@ module.exports = {
             .setTitle(' Squid & Octo 4:4 Random Match ')
             .setDescription('4개씩 2번 독립적으로 추출된 팀별 무기 목록입니다.')
             .addFields(
-                { name: '💛 ', value: formatTeamText(alphaTeam, "Alpha"), inline: true },
-                { name: '💜 ', value: formatTeamText(bravoTeam, "Bravo"), inline: true }
+                { name: '💛', value: formatTeamText(alphaTeam, "Alpha"), inline: true },
+                { name: '💜', value: formatTeamText(bravoTeam, "Bravo"), inline: true }
             )
             .setFooter({ text: `요청자: ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
