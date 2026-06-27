@@ -15,7 +15,7 @@ module.exports = {
 
     try {
       // 1. MongoDB에서 전체 무기 목록을 긁어옵니다.
-      const allWeapons = await Weapon.find({});
+      const allWeapons = await Weapon.find({}).populate('mainWeapon');
       
       // 2. 이 서버의 기존 허용 무기 설정 풀을 가져옵니다 (체크박스 활성화용)
       const setting = await GuildSetting.findOne({ guildId });
@@ -37,7 +37,7 @@ module.exports = {
       shooters.forEach(w => {
         shooterMenu.addOptions(
           new StringSelectMenuOptionBuilder()
-            .setLabel(String(w.name_ja).trim())
+            .setLabel(w.mainWeapon?.name_ja)
             .setValue(w._id.toString())
             .setDefault(allowedIds.includes(w._id.toString())) // 💡 기존에 이미 등록된 무기라면 자동으로 체크 표시!
         );
