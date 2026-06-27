@@ -52,9 +52,9 @@ client.on('interactionCreate', async interaction => {
             await interaction.reply({ content: '명령어 실행 중 오류가 발생했습니다.', ephemeral: true });
         }
     }
-});
+// });
 
-client.on('interactionCreate', async interaction => {
+// client.on('interactionCreate', async interaction => {
     
     // 💡 [핵심 수신 지점] 유저가 드롭다운 메뉴를 마우스로 조작했을 때 작동하는 리스너
     if (interaction.isStringSelectMenu()) {
@@ -132,12 +132,12 @@ client.on('interactionCreate', async interaction => {
         return; // 컴포넌트 처리가 끝났으므로 일반 슬래시 명령어 핸들러로 넘어가지 않고 여기서 완전 종료
     }
 
-    // 💡 아래는 기존에 사용하시던 일반 슬래시 커맨드 전용 처리단입니다 (코드는 기존과 100% 동일)
-    if (!interaction.isChatInputCommand()) return;
+    // // 💡 아래는 기존에 사용하시던 일반 슬래시 커맨드 전용 처리단입니다 (코드는 기존과 100% 동일)
+    // if (!interaction.isChatInputCommand()) return;
     
-    const command = client.commands.get(interaction.commandName);
-    if (!command) return;
-    // ... 이하 명령어 execute 및 sync 분기 등 기존 코드 그대로 유지 ...
+    // const command = client.commands.get(interaction.commandName);
+    // if (!command) return;
+    // // ... 이하 명령어 execute 및 sync 분기 등 기존 코드 그대로 유지 ...
 });
 
 
