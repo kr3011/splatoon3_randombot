@@ -64,11 +64,17 @@ module.exports = {
         await interaction.deferReply({ ephemeral: true });
 
         // 💡 분리해둔 1단계 서비스를 실행해 깨끗하게 연산된 드롭다운 ActionRow 객체들을 배달 받습니다!
-        const configRows = await generateConfigMenuRows(guildId);
+        const { firstRows, secondRows } = await generateConfigMenuRows(guildId);
 
         await interaction.editReply({
-          content: '⚙️ **ブキチ杯の武器リスト設定**\nこのサーバーでブキチ杯に **含まない(除外する)武器**を選択してください。\n(選択された武器はブキチ杯から除外されます。)',
-          components: configRows
+          content: '⚙️ **ブキチ杯の武器リスト設定 [1/2]**\nこのサーバーでブキチ杯に **含まない(除外する)武器**を選択してください。\n(選択された武器はブキチ杯から除外されます。)',
+          components: firstRows
+        });
+
+        await interaction.followUp({
+          content: '⚙️ **ブキチ杯の武器リスト設定 [2/2]**\nこのサーバーでブキチ杯に **含まない(除外する)武器**を選択してください。\n(選択された武器はブキチ杯から除外されます。)',
+          components: secondRows,
+          ephemeral: true
         });
       }
 
