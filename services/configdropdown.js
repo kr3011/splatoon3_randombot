@@ -63,44 +63,44 @@ async function generateConfigMenuRows(guildId) {
     };
 
     // 🎰 Row 1: 단거리 슈터 메뉴판
-    const menu1 = new StringSelectMenuBuilder().setCustomId('short_shooters').setPlaceholder('🚫 シューター(短射程)').setMinValues(0);
+    const menu1 = new StringSelectMenuBuilder().setCustomId('config_short_shooters').setPlaceholder('🚫 シューター(短射程)').setMinValues(0);
     addCleanOptions(menu1, shortShooters, 'SHORT_SHOOTER');
 
     // 🎰 Row 2: 장거리 슈터 메뉴판
-    const menu2 = new StringSelectMenuBuilder().setCustomId('long_shooters').setPlaceholder('🚫 シューター(長射程)').setMinValues(0);
+    const menu2 = new StringSelectMenuBuilder().setCustomId('config_long_shooters').setPlaceholder('🚫 シューター(長射程)').setMinValues(0);
     addCleanOptions(menu2, longShooters, 'LONG_SHOOTER');
 
     // 🎰 Row 3: 롤러 & 붓 통합 메뉴판
-    const menu3 = new StringSelectMenuBuilder().setCustomId('rollers_brushes').setPlaceholder('🚫 ローラー/筆').setMinValues(0);
+    const menu3 = new StringSelectMenuBuilder().setCustomId('config_rollers_brushes').setPlaceholder('🚫 ローラー/筆').setMinValues(0);
     addCleanOptions(menu3, rollersAndBrushes, 'ROLLER_BRUSH');
 
     // 🎰 Row 4: 차저 메뉴판
-    const menu4 = new StringSelectMenuBuilder().setCustomId('chargers').setPlaceholder('🚫 チャージャー').setMinValues(0);
+    const menu4 = new StringSelectMenuBuilder().setCustomId('config_chargers').setPlaceholder('🚫 チャージャー').setMinValues(0);
     addCleanOptions(menu4, chargers, 'CHARGERS');
 
     // 🎰 Row 5: 블래스터 통합 메뉴판
-    const menu5 = new StringSelectMenuBuilder().setCustomId('blasters').setPlaceholder('🚫 ブラスター').setMinValues(0);
+    const menu5 = new StringSelectMenuBuilder().setCustomId('config_blasters').setPlaceholder('🚫 ブラスター').setMinValues(0);
     addCleanOptions(menu5, blasters, 'BLASTERS');
 
     
     // 🎰 Row 6: 브렐라 & 와이퍼 통합 메뉴판
-    const menu6 = new StringSelectMenuBuilder().setCustomId('brellas_wipers').setPlaceholder('🚫 シェルター/ワイパー').setMinValues(0);
+    const menu6 = new StringSelectMenuBuilder().setCustomId('config_brellas_wipers').setPlaceholder('🚫 シェルター/ワイパー').setMinValues(0);
     addCleanOptions(menu6, brellasAndWipers, 'BRELLA_WIPER');
 
     // 🎰 Row 7:  통합 메뉴판
-    const menu7 = new StringSelectMenuBuilder().setCustomId('sloshers').setPlaceholder('🚫 スロッシャー').setMinValues(0);
+    const menu7 = new StringSelectMenuBuilder().setCustomId('config_sloshers').setPlaceholder('🚫 スロッシャー').setMinValues(0);
     addCleanOptions(menu7, sloshers, 'SLOSHER');
 
     // 🎰 Row 8: 브렐라 & 와이퍼 통합 메뉴판
-    const menu8 = new StringSelectMenuBuilder().setCustomId('spinners').setPlaceholder('🚫 スピナー').setMinValues(0);
+    const menu8 = new StringSelectMenuBuilder().setCustomId('config_spinners').setPlaceholder('🚫 スピナー').setMinValues(0);
     addCleanOptions(menu8, spinners, 'SPINNER');
 
     // 🎰 Row 9: 브렐라 & 와이퍼 통합 메뉴판
-    const menu9 = new StringSelectMenuBuilder().setCustomId('maneuvers').setPlaceholder('🚫 マニューバー').setMinValues(0);
+    const menu9 = new StringSelectMenuBuilder().setCustomId('config_maneuvers').setPlaceholder('🚫 マニューバー').setMinValues(0);
     addCleanOptions(menu9, maneuvers, 'MANEUVER');
 
     // 🎰 Row 10: 브렐라 & 와이퍼 통합 메뉴판
-    const menu10 = new StringSelectMenuBuilder().setCustomId('stringers').setPlaceholder('🚫 ストリンガー').setMinValues(0);
+    const menu10 = new StringSelectMenuBuilder().setCustomId('config_stringers').setPlaceholder('🚫 ストリンガー').setMinValues(0);
     addCleanOptions(menu10, stringers, 'STRINGER');
 
     // 개별 로우 팩 조립 후 최종 반환
