@@ -10,7 +10,7 @@ const SpecialWeapon = require('../models/SpecialWeapon');
  */
 async function syncSplatoonWeapons() {
   // 1. 외부 오픈 API 데이터 호출
-  const response = await axios.get('https://stat.ink/api/v3/weapon', {
+  const response = await axios.get('https://stat.ink/api/v3/weapon?full=1', {
       headers: {
         'Accept': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' // 브라우저인 척 위장
