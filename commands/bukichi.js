@@ -35,7 +35,7 @@ module.exports = {
 
                 const subText = nameKr ? `\n┗ > *${nameKr}*` : '';
 
-                return `**${teamName} ${index + 1}**\n┗ 🔫${nameJa}\n${nameKr}\n`;
+                return `**${teamName} ${index + 1}**\n┗ 🔫${nameJa}\n${subText}\n`;
             }).join('\n');
         };
 
