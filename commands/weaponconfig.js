@@ -15,7 +15,7 @@ module.exports = {
 
     try {
       // 1. MongoDB에서 전체 무기 목록을 긁어옵니다.
-      const allWeapons = await Weapon.find({}).populate('MainWeapon');
+      const allWeapons = await Weapon.find({}).populate('mainWeapon');
       
       // 2. 이 서버의 기존 허용 무기 설정 풀을 가져옵니다 (체크박스 활성화용)
       const setting = await GuildSetting.findOne({ guildId });
