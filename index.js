@@ -79,17 +79,17 @@ client.on('interactionCreate', async interaction => {
                 const allWeapons = await Weapon.find({});
 
                 // 보내주신 영문 카테고리/사거리 기준과 100% 일치시킵니다.
-                if (customId === 'config_short_shooters') {
+                if (customId === 'short_shooters') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => (w.category === 'shooter' || w.category === 'reelgun') && w.matching_range <= 15);
-                } else if (customId === 'config_long_shooters') {
+                } else if (customId === 'long_shooters') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => (w.category === 'shooter' || w.category === 'reelgun') && w.matching_range > 15);
-                } else if (customId === 'config_rollers_brushes') {
+                } else if (customId === 'rollers_brushes') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'roller' || w.category === 'brush');
                 } else if (customId === 'chargers') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'charger');
                 } else if (customId === 'blasters') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'blaster');
-                } else if (customId === 'config_brellas_wipers') {
+                } else if (customId === 'brellas_wipers') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'brella' || w.category === 'wiper');
                 } else if (customId === 'sloshers') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'slosher');
