@@ -61,54 +61,57 @@ client.on('interactionCreate', async interaction => {
         const { customId, values, guildId } = interaction;
 
         // 우리가 만든 config 관련 메뉴판 신호인지 체크 (config_short_shooters 등)
+                // index.js 내부 StringSelectMenu 감지 이벤트 안쪽
         if (customId.startsWith('config_')) {
-            // 유저 화면에 '생각 중...' 렉이 걸리거나 답장 실패가 뜨지 않도록 즉시 조용히 승인(버퍼링) 처리
             await interaction.deferUpdate(); 
 
             try {
                 const { GuildSetting, Weapon } = require('./models');
                 
-                // 1. 이 서버의 기존 설정 파일 데이터베이스에서 로드 (없으면 새로 생성)
+                // 1. 이 서버의 기존 설정 로드 (없으면 신규 생성)
                 let setting = await GuildSetting.findOne({ guildId });
                 if (!setting) {
                     setting = new GuildSetting({ guildId, bannedWeapons: [] });
                 }
 
-                // 2. 다른 카테고리의 무기들이 지워지는 대참사를 막기 위한 정밀 갱신 로직!
-                // 현재 조작 중인 메뉴판 카테고리의 '전체 무기 ID 목록'을 DB에서 먼저 조회합니다.
+                // 2. [체크 해제 감지의 핵심] 현재 조작 중인 드롭다운 메뉴의 '전체 무기 목록'을 먼저 확보합니다.
                 let currentMenuCategoryWeapons = [];
                 const allWeapons = await Weapon.find({});
 
+                // 보내주신 영문 카테고리/사거리 기준과 100% 일치시킵니다.
                 if (customId === 'config_short_shooters') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === '슈터' && w.matching_range <= 15);
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'shooter' && w.matching_range <= 15);
                 } else if (customId === 'config_long_shooters') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === '슈터' && w.matching_range > 15);
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'shooter' && w.matching_range > 15);
                 } else if (customId === 'config_rollers_brushes') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === '롤러' || w.category === '붓' || w.category === '브러시');
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'roller' || w.category === 'brush');
                 } else if (customId === 'config_brellas_wipers') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === '브렐라' || w.category === '와이퍼' || w.category === '스플라타나' || w.category === '쉘터' || w.category === '머쉘린');
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'brella' || w.category === 'splatana');
                 }
 
+                // 현재 메뉴판에 노출되어 있는 모든 무기의 ID 리스트
                 const currentMenuWeaponIds = currentMenuCategoryWeapons.map(w => w._id.toString());
 
-                // 3. 기존에 저장되어 있던 전체 밴 목록 추출
-                let totalAllowedIds = setting.bannedWeapons.map(id => id.toString());
+                // 3. 기존에 DB에 저장되어 있던 이 서버의 전체 밴 무기 ID 리스트
+                let existingBannedIds = setting.bannedWeapons.map(id => id.toString());
 
-                // 4. [핵심 공정] 이번에 조작한 카테고리에 속하는 기존 무기 ID들만 싹 골라내어 도화지에서 지웁니다.
-                totalAllowedIds = totalAllowedIds.filter(id => !currentMenuWeaponIds.includes(id));
+                // 4. 🔥 [오류 해결의 열쇠] 기존 밴 목록에서 '현재 조작 중인 카테고리의 무기들'만 싹 뺍니다. (초기화 도화지 작업)
+                // 이 과정을 거쳐야 유저가 체크를 풀었을 때 기존 밴 목록에서 깔끔하게 지워집니다!
+                existingBannedIds = existingBannedIds.filter(id => !currentMenuWeaponIds.includes(id));
 
-                // 5. 유저가 방금 드롭다운에서 새롭게 '체크(선택)'한 진짜 밴 ID 리스트(values)만 깨끗하게 새로 추가합니다.
+                // 5. 유저가 방금 드롭다운에서 최종적으로 '체크를 유지한' 진짜 밴 ID 리스트(values)만 깨끗하게 누적합니다.
+                // ('none' 옵션 필터링 곁들임)
                 values.forEach(id => {
-                    if (id !== 'none' && !totalAllowedIds.includes(id)) {
-                        totalAllowedIds.push(id);
+                    if (id !== 'none' && !existingBannedIds.includes(id)) {
+                        existingBannedIds.push(id);
                     }
                 });
 
-                // 6. 갱신된 통합 밴 목록을 몽고DB 서랍장에 최종 저장(덮어쓰기)합니다.
-                setting.bannedWeapons = totalAllowedIds;
+                // 6. 완벽하게 차집합/합집합 연산이 끝난 최종 밴 목록을 몽고DB에 실시간 저장(덮어쓰기)합니다.
+                setting.bannedWeapons = existingBannedIds;
                 await setting.save();
                 
-                console.log(`[🚫 밴 설정 갱신 완료] 서버 ID: ${guildId} | 현재 총 밴 무기 수: ${setting.bannedWeapons.length}개`);
+                console.log(`[🚫 밴 설정 갱신완료] 서버 ID: ${guildId} | 현재 총 밴 무기 수: ${setting.bannedWeapons.length}개`);
                 
             } catch (error) {
                 console.error('❌ 설정 저장 실시간 반영 실패:', error);
