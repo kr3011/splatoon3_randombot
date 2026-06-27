@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
-const { Weapon, GuildSetting } = require('../models');
+const { Weapon, MainWeapon, GuildSetting } = require('../models');
 
 module.exports = {
   isGlobal: true, // 모든 일반 서버에 배포하므로 true
@@ -53,7 +53,7 @@ module.exports = {
       rollers.forEach(w => {
         rollerMenu.addOptions(
           new StringSelectMenuOptionBuilder()
-            .setLabel(w.name_kr)
+            .setLabel(w.mainWeapon.name_kr)
             .setValue(w._id.toString())
             .setDefault(allowedIds.includes(w._id.toString()))
         );
