@@ -37,7 +37,7 @@ module.exports = {
       shooters.forEach(w => {
         shooterMenu.addOptions(
           new StringSelectMenuOptionBuilder()
-            .setLabel(w.name_ja)
+            .setLabel(String(w.name_ja).trim())
             .setValue(w._id.toString())
             .setDefault(allowedIds.includes(w._id.toString())) // 💡 기존에 이미 등록된 무기라면 자동으로 체크 표시!
         );
