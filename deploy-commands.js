@@ -28,7 +28,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 (async () => {
   try {
     const CLIENT_ID = process.env.CLIENT_ID;
-    const TEST_GUILD_ID = '여기에_내_비밀_테스트_서버_ID_입력';
+    const TEST_GUILD_ID = process.env.TEST_GUILD_ID; 
 
     // 1. 글로벌 명령어 등록
     console.log('🌐 일반 명령어를 글로벌로 배포합니다...');
