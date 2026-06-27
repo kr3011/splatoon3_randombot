@@ -8,4 +8,4 @@ const nameSchema = new mongoose.Schema({
 });
 
 // 외부 파일(service 등)에서 이 틀을 사용할 수 있도록 내보냅니다.
-module.exports = mongoose.model('Weapon', nameSchema);
+module.exports = mongoose.model('MainWeapon', nameSchema);
