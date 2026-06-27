@@ -63,15 +63,15 @@ async function generateConfigMenuRows(guildId) {
     };
 
     // 🎰 Row 1: 단거리 슈터 메뉴판
-    const menu1 = new StringSelectMenuBuilder().setCustomId('config_short_shooters').setPlaceholder('🚫 シューター(短射程)').setMinValues(0);
+    const menu1 = new StringSelectMenuBuilder().setCustomId('short_shooters').setPlaceholder('🚫 シューター(短射程)').setMinValues(0);
     addCleanOptions(menu1, shortShooters, 'SHORT_SHOOTER');
 
     // 🎰 Row 2: 장거리 슈터 메뉴판
-    const menu2 = new StringSelectMenuBuilder().setCustomId('config_long_shooters').setPlaceholder('🚫 シューター(長射程)').setMinValues(0);
+    const menu2 = new StringSelectMenuBuilder().setCustomId('long_shooters').setPlaceholder('🚫 シューター(長射程)').setMinValues(0);
     addCleanOptions(menu2, longShooters, 'LONG_SHOOTER');
 
     // 🎰 Row 3: 롤러 & 붓 통합 메뉴판
-    const menu3 = new StringSelectMenuBuilder().setCustomId('config_rollers_brushes').setPlaceholder('🚫 ローラー/筆').setMinValues(0);
+    const menu3 = new StringSelectMenuBuilder().setCustomId('rollers_brushes').setPlaceholder('🚫 ローラー/筆').setMinValues(0);
     addCleanOptions(menu3, rollersAndBrushes, 'ROLLER_BRUSH');
 
     // 🎰 Row 4: 차저 메뉴판
@@ -84,7 +84,7 @@ async function generateConfigMenuRows(guildId) {
 
     
     // 🎰 Row 6: 브렐라 & 와이퍼 통합 메뉴판
-    const menu6 = new StringSelectMenuBuilder().setCustomId('config_brellas_wipers').setPlaceholder('🚫 シェルター/ワイパー').setMinValues(0);
+    const menu6 = new StringSelectMenuBuilder().setCustomId('brellas_wipers').setPlaceholder('🚫 シェルター/ワイパー').setMinValues(0);
     addCleanOptions(menu6, brellasAndWipers, 'BRELLA_WIPER');
 
     // 🎰 Row 7:  통합 메뉴판

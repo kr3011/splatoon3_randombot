@@ -80,13 +80,25 @@ client.on('interactionCreate', async interaction => {
 
                 // 보내주신 영문 카테고리/사거리 기준과 100% 일치시킵니다.
                 if (customId === 'config_short_shooters') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'shooter' && w.matching_range <= 15);
+                    currentMenuCategoryWeapons = allWeapons.filter(w => (w.category === 'shooter' || w.category === 'reelgun') && w.matching_range <= 15);
                 } else if (customId === 'config_long_shooters') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'shooter' && w.matching_range > 15);
+                    currentMenuCategoryWeapons = allWeapons.filter(w => (w.category === 'shooter' || w.category === 'reelgun') && w.matching_range > 15);
                 } else if (customId === 'config_rollers_brushes') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'roller' || w.category === 'brush');
+                } else if (customId === 'chargers') {
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'charger');
+                } else if (customId === 'blasters') {
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'blaster');
                 } else if (customId === 'config_brellas_wipers') {
-                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'brella' || w.category === 'splatana');
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'brella' || w.category === 'wiper');
+                } else if (customId === 'sloshers') {
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'slosher');
+                } else if (customId === 'spinners') {
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'spinner');
+                } else if (customId === 'maneuvers') {
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'maneuver');
+                } else if (customId === 'stringers') {
+                    currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'stringer');
                 }
 
                 // 현재 메뉴판에 노출되어 있는 모든 무기의 ID 리스트
