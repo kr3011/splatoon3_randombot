@@ -20,13 +20,14 @@ async function syncSplatoonWeapons() {
     throw new Error('올바르지 않은 데이터 형식입니다.', typeof externalWeapons);
   }
 
-  // 2. 내 MongoDB 스키마 형식에 맞게 데이터 가공 (한국어 우선 적용)
+  // 2. 내 MongoDB 스키마 형식에 맞게 데이터 가공
   const weaponListToSave = externalWeapons.map(w => ({
-    name: w.name?.ja_JP || w.name?.en_US || '이름 없음', 
-    category: w.type?.name?.ja_JP || w.type?.name?.en_US || '분류 없음',
-    subWeapon: w.sub?.name?.ja_JP || '없음',
-    specialWeapon: w.special?.name?.ja_JP || '없음',
-    levelRequired: w.res_level || 1
+    key: w.key || 'none',
+    category: w.type?.key || 'none',
+    mainWeapon: w.main || 'none',
+    subWeapon: w.sub?.key || 'none',
+    specialWeapon: w.special?.key || 'none',
+    matching_range: w.matching_range || null
   }));
 
   // 3. 기존 데이터베이스 데이터 싹 비우기 (중복 방지 원자적 처리 가능)
