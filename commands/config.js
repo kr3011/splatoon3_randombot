@@ -10,6 +10,9 @@ module.exports = {
     .setName('config')
     .setDescription('이 서버의 랜덤 매칭 무기 풀 설정을 관리합니다.')
     .addSubcommand(subcommand =>
+      subcommand.setName('menu').setDescription('현재 이 서버에서 밴(제외)된 모든 무기 목록을 확인합니다.')
+    )
+    .addSubcommand(subcommand =>
       subcommand.setName('status').setDescription('현재 이 서버에서 밴(제외)된 모든 무기 목록을 확인합니다.')
     ),
 
@@ -55,9 +58,9 @@ module.exports = {
       }
 
       // =================================================================
-      // ⚙️ 시나리오 B: 유저가 원래대로 [/config] 를 입력했을 때 (체크박스 폼)
+      // ⚙️ 시나리오 B: 유저가 원래대로 [/config menu] 를 입력했을 때 (체크박스 폼)
       // =================================================================
-      if (!subcommand) {
+      if (subcommand === 'menu') {
         await interaction.deferReply({ ephemeral: true });
 
         // 💡 분리해둔 1단계 서비스를 실행해 깨끗하게 연산된 드롭다운 ActionRow 객체들을 배달 받습니다!
