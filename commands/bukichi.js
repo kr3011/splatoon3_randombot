@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { getDoubleFourMatchWeapons } = require('../services/match.js');
 
 module.exports = {
     isGlobal: true,
