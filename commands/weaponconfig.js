@@ -5,7 +5,7 @@ module.exports = {
   isGlobal: true, // 모든 일반 서버에 배포하므로 true
   
   data: new SlashCommandBuilder()
-    .setName('weaponconfig')
+    .setName('config')
     .setDescription('이 서버의 랜덤 매칭 무기 풀을 카테고리별로 설정합니다.'),
 
   async execute(interaction) {
@@ -22,21 +22,22 @@ module.exports = {
       const allowedIds = setting ? setting.allowedWeapons.map(id => id.toString()) : [];
 
       // 3. 무기들을 카테고리별로 분류하기 위한 바구니 생성
-      const shooters = allWeapons.filter(w => w.category === '슈터');
-      const rollers = allWeapons.filter(w => w.category === '롤러');
-      const chargers = allWeapons.filter(w => w.category === '차저');
+      const shooter = allWeapons.filter(w => w.category === 'shooter');
+      const blaster = allWeapons.filter(w => w.category === 'blaster');
+      const roller = allWeapons.filter(w => w.category === 'roller');
+      const charger = allWeapons.filter(w => w.category === 'charger');
 
       // 4. [공정 A] 슈터 전용 드롭다운 메뉴 조립 (최대 25개 제한 안전지대)
       const shooterMenu = new StringSelectMenuBuilder()
         .setCustomId('config_shooters')
         .setPlaceholder('🔫 슈터 종류 선택 (복수 선택 가능)')
         .setMinValues(0) // 아무것도 선택 안 함 허용
-        .setMaxValues(Math.min(shooters.length, 25)); // 가용 개수만큼 체크박스 활성화 [1, 2]
+        .setMaxValues(Math.min(shooter.length, 25)); // 가용 개수만큼 체크박스 활성화 [1, 2]
 
       shooters.forEach(w => {
         shooterMenu.addOptions(
           new StringSelectMenuOptionBuilder()
-            .setLabel(w.name_kr)
+            .setLabel(w.name_ja)
             .setValue(w._id.toString())
             .setDefault(allowedIds.includes(w._id.toString())) // 💡 기존에 이미 등록된 무기라면 자동으로 체크 표시!
         );
