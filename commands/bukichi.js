@@ -16,7 +16,7 @@ module.exports = {
         try {
         // 💡 서비스에서 4*2 형태의 2차원 배열을 받아옵니다.
         // teams[0] 은 알파팀(4개), teams[1] 은 브라보팀(4개)이 됩니다.
-        const teams = await getDoubleMatchWeapons();
+        const teams = await getDoubleMatchWeapons(interaction.guildId);
         
         const alphaTeam = teams[0];
         const bravoTeam = teams[1];

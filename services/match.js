@@ -1,9 +1,9 @@
-const { Weapon, MainWeapon, GuildSetting } = require('../models');
+const { Weapon, GuildSetting } = require('../models');
 
 /**
  * MongoDB에서 4개의 무작위 무기를 서브/스페셜 정보와 함께 추출하는 공정 (내부 전용)
  */
-async function fetchRandomWeapons() {
+async function fetchRandomWeapons(guildId) {
   // 1. 이 서버의 밴(제외) 무기 풀 설정을 체크합니다.
   const setting = await GuildSetting.findOne({ guildId });
 
@@ -53,10 +53,10 @@ async function fetchRandomWeapons() {
  * 4개짜리 독립된 팀 배열을 2번 뽑아 [ [4개], [4개] ] 형태로 반환합니다.
  * @returns {Promise<Array<Array>>} 2차원 배열 형태의 팀 데이터
  */
-async function getDoubleMatchWeapons() {
+async function getDoubleMatchWeapons(guildId) {
   // 💡 각각 독립된 랜덤 뽑기를 실행하여 완벽히 격리된 팀 생성
-  const alphaTeam = await fetchRandomWeapons();
-  const bravoTeam = await fetchRandomWeapons();
+  const alphaTeam = await fetchRandomWeapons(guildId);
+  const bravoTeam = await fetchRandomWeapons(guildId);
 
   // 💡 4*2 형태(2차원 배열)로 묶어서 반환합니다.
   return [alphaTeam, bravoTeam];
