@@ -1,4 +1,4 @@
-const Weapon = require('../models/Weapon');
+const { Weapon } = require('../models');
 
 /**
  * MongoDB에서 4개의 무작위 무기를 서브/스페셜 정보와 함께 추출하는 공정 (내부 전용)

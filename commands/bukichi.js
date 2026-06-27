@@ -29,7 +29,7 @@ module.exports = {
         // 팀별 텍스트 가공 처리 함수 (동일)
         const formatTeamText = (weapons) => {
             return weapons.map((w, index) => {
-                return `**Player ${index + 1}**\n┗ 🔫 ${w.name_jp}\n`;
+                return `**Player ${w.name_ja}**\n┗ 🔫 ${w.name_ja}\n`;
             }).join('\n');
         };
 

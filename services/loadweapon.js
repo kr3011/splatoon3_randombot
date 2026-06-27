@@ -1,10 +1,7 @@
 const axios = require('axios');
 const mongoose = require('mongoose'); 
 
-const Weapon = require('../models/Weapon'); // 본인의 무기 스키마 경로 확인
-const MainWeapon = require('../models/MainWeapon');
-const SubWeapon = require('../models/SubWeapon');
-const SpecialWeapon = require('../models/SpecialWeapon');
+const { Weapon, MainWeapon, SubWeapon, SpecialWeapon } = require('../models');
 
 /**
  * stat.ink API에서 스플래툰 3 최신 무기 데이터를 긁어와 MongoDB를 갱신합니다.
