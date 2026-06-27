@@ -34,7 +34,7 @@ async function syncSplatoonWeapons() {
       if (!mainMap.has(w.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
         const newMain = new MainWeapon({
-          name_ja: w.name?.ja_JP || '이름 없음',
+          name_ja: w.name?.ja_JP || 'none',
           name_kr: w.name?.ko_KR || '이름 없음',
         });
         await newMain.save();
@@ -47,7 +47,7 @@ async function syncSplatoonWeapons() {
       if (!subMap.has(w.sub.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
         const newSub = new SubWeapon({
-          name_ja: w.sub.name?.ja_JP || '이름 없음',
+          name_ja: w.sub.name?.ja_JP || 'none',
           name_kr: w.sub.name?.ko_KR || '이름 없음',
         });
         await newSub.save();
@@ -60,7 +60,7 @@ async function syncSplatoonWeapons() {
       if (!specialMap.has(w.special.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
         const newSpecial = new SpecialWeapon({ 
-          name_ja: w.special.name?.ja_JP || '이름 없음',
+          name_ja: w.special.name?.ja_JP || 'none',
           name_kr: w.special.name?.ko_KR || '이름 없음',
         });
         await newSpecial.save();
