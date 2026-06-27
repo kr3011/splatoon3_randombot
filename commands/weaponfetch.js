@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { syncSplatoonWeapons } = require('../services/weaponService'); // 서비스 파일 로드
+const { syncSplatoonWeapons } = require('../services/loadweapon.js'); // 서비스 파일 로드
 
 module.exports = {
   isGlobal: false, 
