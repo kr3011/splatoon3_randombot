@@ -28,6 +28,7 @@ async function syncSplatoonWeapons() {
   // 💡 [핵심 수정] 낡은 뼈대 규칙(인덱스 캐시)까지 아예 통째로 폭파(Drop)합니다.
   // 데이터베이스가 비어있을 때 에러가 나지 않도록 try-catch로 안전하게 감싸줍니다.
   try { await mongoose.connection.db.collection('weapons').drop(); } catch (e) {}
+  try { await mongoose.connection.db.collection('mainweapons').drop(); } catch (e) {}
   try { await mongoose.connection.db.collection('subweapons').drop(); } catch (e) {}
   try { await mongoose.connection.db.collection('specialweapons').drop(); } catch (e) {}
 
@@ -97,7 +98,7 @@ async function syncSplatoonWeapons() {
       specialWeapon: specialWeaponId // 외래키 연결 [1]
     };
   });
-  
+
   // 💡 껍데기가 지워졌으므로 새로 짤 뼈대(인덱스)를 강제 싱크한 후 밀어 넣습니다
   await Weapon.ensureIndexes();
   // 4. 새로운 최신 데이터 통째로 밀어 넣기
