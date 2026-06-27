@@ -16,7 +16,7 @@ async function syncSplatoonWeapons() {
       }
   });
   const externalWeapons = response.data;
-  console.log(response.data[0]);
+  // console.log(response.data[0]);
 
   if (!Array.isArray(externalWeapons)) {
     throw new Error('올바르지 않은 데이터 형식입니다.', typeof externalWeapons);
