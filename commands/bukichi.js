@@ -30,9 +30,12 @@ module.exports = {
         const formatTeamText = (weapons, teamName) => {
             return weapons.map((w, index) => {
                 const nameJa = w.mainWeaponInfo?.name_ja;
-                if (!nameJa) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
+                const nameKr = w.mainWeaponInfo?.name_kr;
+                if (!nameJa || !nameKr) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
 
-                return `**${teamName} ${index + 1}**\n┗ 🔫${nameJa}\n`;
+                const subText = nameKr ? `\n┗ > *${nameKr}*` : '';
+
+                return `**${teamName} ${index + 1}**\n┗ 🔫${nameJa}\n${nameKr}\n`;
             }).join('\n');
         };
 
