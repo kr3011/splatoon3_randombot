@@ -7,7 +7,7 @@ const weaponSchema = new mongoose.Schema({
 
     mainWeapon: { 
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'mainWeapon' // 👈 'SubWeapon' 모델과 연결하겠다는 선언
+      ref: 'MainWeapon' // 👈 'SubWeapon' 모델과 연결하겠다는 선언
     },
     subWeapon: { 
       type: mongoose.Schema.Types.ObjectId, 
