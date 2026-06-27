@@ -27,7 +27,7 @@ for (const file of commandFiles) {
 }
 
 // 💡 갱신된 깔끔한 Ready 이벤트
-client.once('ready', async () => {
+client.once('clientReady', async () => {
     console.log(` ${client.user.tag} 봇이 성공적으로 준비되었습니다!`);
     // 💡 여기서 명령어 등록 함수를 실행합니다.
     console.log('🤖 슬래시 명령어 자동 업데이트를 시작합니다...');
