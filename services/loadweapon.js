@@ -67,7 +67,7 @@ async function syncSplatoonWeapons() {
   const weaponListToSave = externalWeapons.map(w => {
     const key = w.key || 'none';
     const category = w.type?.key || 'none';
-    const matching_range = w.matching_range || null;
+    const matching_range = Number(w.matching_range) || null;
 
     // 💡 원본 문자열 대신, 위에서 저장했던 서브/스페셜의 ObjectId(외래키)를 주입합니다! [1]
     const subWeaponId = w.sub ? subMap.get(w.sub.key) : null;
