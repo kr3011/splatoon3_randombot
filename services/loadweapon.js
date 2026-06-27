@@ -1,4 +1,6 @@
 const axios = require('axios');
+const mongoose = require('mongoose'); 
+
 const Weapon = require('../models/Weapon'); // 본인의 무기 스키마 경로 확인
 const MainWeapon = require('../models/MainWeapon');
 const SubWeapon = require('../models/SubWeapon');
@@ -22,6 +24,12 @@ async function syncSplatoonWeapons() {
   if (!Array.isArray(externalWeapons)) {
     throw new Error('올바르지 않은 데이터 형식입니다.', typeof externalWeapons);
   }
+
+  // 💡 [핵심 수정] 낡은 뼈대 규칙(인덱스 캐시)까지 아예 통째로 폭파(Drop)합니다.
+  // 데이터베이스가 비어있을 때 에러가 나지 않도록 try-catch로 안전하게 감싸줍니다.
+  try { await mongoose.connection.db.collection('weapons').drop(); } catch (e) {}
+  try { await mongoose.connection.db.collection('subweapons').drop(); } catch (e) {}
+  try { await mongoose.connection.db.collection('specialweapons').drop(); } catch (e) {}
 
     // 💡 [핵심 가공 로직] 중복 저장을 막기 위한 임시 맵(Map) 선언
   const mainMap = new Map();
@@ -89,10 +97,9 @@ async function syncSplatoonWeapons() {
       specialWeapon: specialWeaponId // 외래키 연결 [1]
     };
   });
-
-  // 3. 기존 데이터베이스 데이터 싹 비우기 (중복 방지 원자적 처리 가능)
-  await Weapon.deleteMany({});
-
+  
+  // 💡 껍데기가 지워졌으므로 새로 짤 뼈대(인덱스)를 강제 싱크한 후 밀어 넣습니다
+  await Weapon.ensureIndexes();
   // 4. 새로운 최신 데이터 통째로 밀어 넣기
   await Weapon.insertMany(weaponListToSave);
 
