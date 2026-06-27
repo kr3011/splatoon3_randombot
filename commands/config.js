@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { GuildSetting } = require('../models');
-const { generateConfigMenuRows } = require('../services/configService'); // 💡 1단계 분리형 서비스 임포트
+const { generateConfigMenuRows } = require('../services/configdropdown'); // 💡 1단계 분리형 서비스 임포트
 
 module.exports = {
   isGlobal: true,
