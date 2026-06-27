@@ -28,10 +28,10 @@ module.exports = {
 
         // 팀별 텍스트 가공 처리 함수 (동일)
         const formatTeamText = (weapons) => {
-            const name = w.mainWeaponInfo?.name_ja;
-            if (!name) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
-
             return weapons.map((w, index) => {
+                const name = w.mainWeaponInfo?.name_ja;
+                if (!name) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
+                
                 return `**${name}**`;
             }).join('\n');
         };
