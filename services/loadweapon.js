@@ -28,11 +28,12 @@ async function syncSplatoonWeapons() {
   // 2. 먼저 원본 데이터를 돌면서 '서브웨폰'과 '스페셜웨폰'만 고유하게 추출하여 저장합니다.
   for (const w of externalWeapons) {
     if (w.key) {
-      const name_ja = w.name?.ja_JP || '이름 없음';
-      const name_kr = w.name?.ko_KR || '이름 없음';
       if (!mainMap.has(w.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
-        const newMain = new mainMap({ name: mainName });
+        const newMain = new mainMap({
+          name_ja: w.name?.ja_JP || '이름 없음',
+          name_kr: w.name?.ko_KR || '이름 없음',
+        });
         await newMain.save();
         mainMap.set(w.key, newMain._id); // 외래키로 쓸 ID 보관 [1]
       }
@@ -40,11 +41,12 @@ async function syncSplatoonWeapons() {
 
     // 서브웨폰 원본 데이터(w.sub) 가공 및 맵에 등록
     if (w.sub && w.sub.key) {
-      const name_ja = w.sub.name?.ja_JP || '이름 없음';
-      const name_kr = w.sub.name?.ko_KR || '이름 없음';
       if (!subMap.has(w.sub.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
-        const newSub = new SubWeapon({ name: subName });
+        const newSub = new SubWeapon({
+          name_ja: w.sub.name?.ja_JP || '이름 없음',
+          name_kr: w.sub.name?.ko_KR || '이름 없음',
+        });
         await newSub.save();
         subMap.set(w.sub.key, newSub._id); // 외래키로 쓸 ID 보관 [1]
       }
@@ -52,11 +54,12 @@ async function syncSplatoonWeapons() {
 
     // 스페셜웨폰 원본 데이터(w.special) 가공 및 맵에 등록
     if (w.special && w.special.key) {
-      const name_ja = w.special.name?.ja_JP || '이름 없음';
-      const name_kr = w.special.name?.ko_KR || '이름 없음';
       if (!specialMap.has(w.special.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
-        const newSpecial = new SpecialWeapon({ name: specialName });
+        const newSpecial = new SpecialWeapon({ 
+          name_ja: w.special.name?.ja_JP || '이름 없음',
+          name_kr: w.special.name?.ko_KR || '이름 없음',
+        });
         await newSpecial.save();
         specialMap.set(w.special.key, newSpecial._id); // 외래키로 쓸 ID 보관 [1]
       }
