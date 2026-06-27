@@ -38,7 +38,7 @@ async function syncSplatoonWeapons() {
   for (const w of externalWeapons) {
     if (w.key) {
       if (!mainMap.has(w.key)) {
-        if (key.toLowerCase() === 'heroshooter_replica' || key.toLowerCase().includes('order')) {
+        if (w.key.toLowerCase() === 'heroshooter_replica' || w.key.toLowerCase().includes('order')) {
           continue; // 저장하지 않고 다음 무기로 넘어감
         }
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
