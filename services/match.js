@@ -4,7 +4,20 @@ const { Weapon, MainWeapon } = require('../models');
  * MongoDB에서 4개의 무작위 무기를 서브/스페셜 정보와 함께 추출하는 공정 (내부 전용)
  */
 async function fetchRandomWeapons() {
+  // 1. 이 서버의 밴(제외) 무기 풀 설정을 체크합니다.
+  const setting = await GuildSetting.findOne({ guildId });
+
+  let matchStage = {};
+
+  // 💡 [핵심 교정] 직관적으로 바뀐 'bannedWeapons' 배열에 금지 무기가 들어있다면,
+  // 그 ID들을 매칭 추첨에서 원천 배제($nin)하라는 명령 필터를 장착합니다!
+  if (setting && setting.bannedWeapons && setting.bannedWeapons.length > 0) {
+    matchStage = { _id: { $nin: setting.bannedWeapons } }; 
+  }
+
+  // 2. 필터링된 안전 무기 풀 안에서 4개 추출 공정 가동
   return await Weapon.aggregate([
+    { $match: matchStage },   // 🚫 밴 당한 무기들을 걸러내는 1번 레일 공정
     { $sample: { size: 4 } }, // 💡 8개 대신 4개만 추출
         {
       $lookup: {
