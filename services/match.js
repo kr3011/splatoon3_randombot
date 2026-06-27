@@ -40,4 +40,4 @@ async function getDoubleMatchWeapons() {
   return [alphaTeam, bravoTeam];
 }
 
-module.exports = { getDoubleFourMatchWeapons };
+module.exports = { getDoubleMatchWeapons };
