@@ -16,7 +16,7 @@ const weaponSchema = new mongoose.Schema({
     specialWeapon: { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'SpecialWeapon' // 👈 'SpecialWeapon' 모델과 연결하겠다는 선언
-    }
+    },
 
     matching_range: { type: Number, required: true },
 });
