@@ -20,15 +20,67 @@ async function syncSplatoonWeapons() {
     throw new Error('올바르지 않은 데이터 형식입니다.', typeof externalWeapons);
   }
 
+    // 💡 [핵심 가공 로직] 중복 저장을 막기 위한 임시 맵(Map) 선언
+  const mainMap = new Map();
+  const subMap = new Map();
+  const specialMap = new Map();
+
+  // 2. 먼저 원본 데이터를 돌면서 '서브웨폰'과 '스페셜웨폰'만 고유하게 추출하여 저장합니다.
+  for (const w of externalWeapons) {
+    if (w.key) {
+      const name_ja = w.name?.ja_JP || '이름 없음';
+      const name_kr = w.name?.ko_KR || '이름 없음';
+      if (!mainMap.has(w.key)) {
+        // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
+        const newMain = new mainMap({ name: mainName });
+        await newMain.save();
+        mainMap.set(w.key, newMain._id); // 외래키로 쓸 ID 보관 [1]
+      }
+    }
+
+    // 서브웨폰 원본 데이터(w.sub) 가공 및 맵에 등록
+    if (w.sub && w.sub.key) {
+      const name_ja = w.sub.name?.ja_JP || '이름 없음';
+      const name_kr = w.sub.name?.ko_KR || '이름 없음';
+      if (!subMap.has(w.sub.key)) {
+        // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
+        const newSub = new SubWeapon({ name: subName });
+        await newSub.save();
+        subMap.set(w.sub.key, newSub._id); // 외래키로 쓸 ID 보관 [1]
+      }
+    }
+
+    // 스페셜웨폰 원본 데이터(w.special) 가공 및 맵에 등록
+    if (w.special && w.special.key) {
+      const name_ja = w.special.name?.ja_JP || '이름 없음';
+      const name_kr = w.special.name?.ko_KR || '이름 없음';
+      if (!specialMap.has(w.special.key)) {
+        // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
+        const newSpecial = new SpecialWeapon({ name: specialName });
+        await newSpecial.save();
+        specialMap.set(w.special.key, newSpecial._id); // 외래키로 쓸 ID 보관 [1]
+      }
+    }
+  }
+
   // 2. 내 MongoDB 스키마 형식에 맞게 데이터 가공
-  const weaponListToSave = externalWeapons.map(w => ({
-    key: w.key || 'none',
-    category: w.type?.key || 'none',
-    mainWeapon: w.main || 'none',
-    subWeapon: w.sub?.key || 'none',
-    specialWeapon: w.special?.key || 'none',
-    matching_range: w.matching_range || null
-  }));
+  const weaponListToSave = externalWeapons.map(w => {
+    const key = w.key || 'none';
+    const category = w.type?.key || 'none';
+    const matching_range = w.matching_range || null;
+
+    // 💡 원본 문자열 대신, 위에서 저장했던 서브/스페셜의 ObjectId(외래키)를 주입합니다! [1]
+    const subWeaponId = w.sub ? subMap.get(w.sub.key) : null;
+    const specialWeaponId = w.special ? specialMap.get(w.special.key) : null;
+
+    return {
+      name,
+      category,
+      levelRequired,
+      subWeapon: subWeaponId,     // 외래키 연결 [1]
+      specialWeapon: specialWeaponId // 외래키 연결 [1]
+    };
+  });
 
   // 3. 기존 데이터베이스 데이터 싹 비우기 (중복 방지 원자적 처리 가능)
   await Weapon.deleteMany({});

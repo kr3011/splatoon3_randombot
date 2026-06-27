@@ -4,9 +4,20 @@ const mongoose = require('mongoose');
 const weaponSchema = new mongoose.Schema({
     key: { type: String, required: true },
     category: { type: String, required: true },      // 무기 종류 (슈터, 롤러 등)
-    mainWeapon: { type: String, required: true },
-    subWeapon: { type: String, default: '없음' },     // 서브 웨폰
-    specialWeapon: { type: String, default: '없음' }, // 스페셜 웨폰
+
+    mainWeapon: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'mainWeapon' // 👈 'SubWeapon' 모델과 연결하겠다는 선언
+    },
+    subWeapon: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'SubWeapon' // 👈 'SubWeapon' 모델과 연결하겠다는 선언
+    },
+    specialWeapon: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'SpecialWeapon' // 👈 'SpecialWeapon' 모델과 연결하겠다는 선언
+    }
+
     matching_range: { type: Number, required: true },
 });
 
