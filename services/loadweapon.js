@@ -76,13 +76,15 @@ async function syncSplatoonWeapons() {
     const matching_range = Number(w.matching_range) || null;
 
     // 💡 원본 문자열 대신, 위에서 저장했던 서브/스페셜의 ObjectId(외래키)를 주입합니다! [1]
+    const mainWeaponId = w.key ? mainMap.get(w.key) : null;
     const subWeaponId = w.sub ? subMap.get(w.sub.key) : null;
     const specialWeaponId = w.special ? specialMap.get(w.special.key) : null;
 
     return {
-      name,
+      key,
       category,
-      levelRequired,
+      matching_range,
+      mainWeapon: mainWeaponId,
       subWeapon: subWeaponId,     // 외래키 연결 [1]
       specialWeapon: specialWeaponId // 외래키 연결 [1]
     };
