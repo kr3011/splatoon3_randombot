@@ -22,10 +22,10 @@ async function syncSplatoonWeapons() {
 
   // 2. 내 MongoDB 스키마 형식에 맞게 데이터 가공 (한국어 우선 적용)
   const weaponListToSave = externalWeapons.map(w => ({
-    name: w.name?.ko_KR || w.name?.en_US || '이름 없음', 
-    category: w.type?.name?.ko_KR || w.type?.name?.en_US || '분류 없음',
-    subWeapon: w.sub?.name?.ko_KR || '없음',
-    specialWeapon: w.special?.name?.ko_KR || '없음',
+    name: w.name?.ja_JP || w.name?.en_US || '이름 없음', 
+    category: w.type?.name?.ja_JP || w.type?.name?.en_US || '분류 없음',
+    subWeapon: w.sub?.name?.ja_JP || '없음',
+    specialWeapon: w.special?.name?.ja_JP || '없음',
     levelRequired: w.res_level || 1
   }));
 
