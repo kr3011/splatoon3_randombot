@@ -6,7 +6,7 @@ module.exports = {
   
   data: new SlashCommandBuilder()
     .setName('fetch')
-    .setDescription('스플래툰 3 최신 무기 데이터를 데이터베이스에 동기화합니다.'),
+    .setDescription('Splatoon3の武器データを取り込みます。'),
 
   async execute(interaction) {
     // 1차 보안: 렌더 환경변수에 등록한 개발자 고유 ID와 비교 (필요 시 주석 해제)

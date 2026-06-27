@@ -7,7 +7,7 @@ module.exports = {
     // 디스코드 메뉴창에 등록될 명령어 정보
     data: new SlashCommandBuilder()
         .setName('bukichi') // 채팅창에 /핑 으로 표시됨 (대문자 불가, 영어/한글 가능)
-        .setDescription('봇이 응답 메시지를 보냅니다.'),
+        .setDescription('ブキチ杯を始めます。(４対４の武器をランダムにマッチングします。)'),
     
     // 사용자가 명령어를 실행했을 때 실행될 기능
     async execute(interaction) {
@@ -23,7 +23,7 @@ module.exports = {
 
         // 만약 데이터베이스가 비어있어 4개를 못 채웠다면 예외 처리
         if (alphaTeam.length < 4 || bravoTeam.length < 4) {
-            return await interaction.editReply('❌ 무기 데이터가 부족합니다. 개발자 전용 `/fetch` 명령어를 실행해 주세요.');
+            return await interaction.editReply('❌ 武器データが存在しません。 `/fetch` を実行し、データを更新してください。');
         }
 
         // 팀별 텍스트 가공 처리 함수 (동일)
@@ -40,8 +40,8 @@ module.exports = {
         // 디스코드 임베드 디자인 및 메시지 전송
         const matchEmbed = new EmbedBuilder()
             .setColor('#10FF00')
-            .setTitle(' Squid & Octo 4:4 Random Match ')
-            .setDescription('4개씩 2번 독립적으로 추출된 팀별 무기 목록입니다.')
+            .setTitle('ブキチ杯バトル開始！')
+            .setDescription('上から順番に各チームのメンバーと武器を割り当てます。')
             .addFields(
                 { name: '💛', value: formatTeamText(alphaTeam, "Alpha"), inline: true },
                 { name: '💜', value: formatTeamText(bravoTeam, "Bravo"), inline: true }
@@ -53,7 +53,7 @@ module.exports = {
 
         } catch (error) {
             console.error('매칭 생성 실패:', error);
-            await interaction.editReply('❌ 무기를 추첨하는 도중 데이터베이스 에러가 발생했습니다.');
+            await interaction.editReply('❌ データにエラーがあります。');
         }
     },
 };
