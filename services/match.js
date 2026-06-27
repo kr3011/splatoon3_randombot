@@ -1,4 +1,4 @@
-const { Weapon } = require('../models');
+const { Weapon, MainWeapon } = require('../models');
 
 /**
  * MongoDB에서 4개의 무작위 무기를 서브/스페셜 정보와 함께 추출하는 공정 (내부 전용)
@@ -6,6 +6,14 @@ const { Weapon } = require('../models');
 async function fetchRandomWeapons() {
   return await Weapon.aggregate([
     { $sample: { size: 4 } }, // 💡 8개 대신 4개만 추출
+        {
+      $lookup: {
+        from: 'mainweapons',
+        localField: 'mainWeapon',
+        foreignField: '_id',
+        as: 'mainWeaponInfo'
+      }
+    },
     {
       $lookup: {
         from: 'subweapons',
@@ -22,6 +30,7 @@ async function fetchRandomWeapons() {
         as: 'specialWeaponInfo'
       }
     },
+    { $unwind: { path: '$mainWeaponInfo', preserveNullAndEmptyArrays: true } },
     { $unwind: { path: '$subWeaponInfo', preserveNullAndEmptyArrays: true } },
     { $unwind: { path: '$specialWeaponInfo', preserveNullAndEmptyArrays: true } }
   ]);
