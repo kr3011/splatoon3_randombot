@@ -1,5 +1,8 @@
 const axios = require('axios');
-const { Weapon, MainWeapon, SubWeapon, SpecialWeapon } = require('../models');// 본인의 무기 스키마 경로 확인
+const Weapon = require('../models/Weapon'); // 본인의 무기 스키마 경로 확인
+const MainWeapon = require('../models/MainWeapon');
+const SubWeapon = require('../models/SubWeapon');
+const SpecialWeapon = require('../models/SpecialWeapon');
 
 /**
  * stat.ink API에서 스플래툰 3 최신 무기 데이터를 긁어와 MongoDB를 갱신합니다.
@@ -30,7 +33,7 @@ async function syncSplatoonWeapons() {
     if (w.key) {
       if (!mainMap.has(w.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
-        const newMain = new mainMap({
+        const newMain = new MainWeapon({
           name_ja: w.name?.ja_JP || '이름 없음',
           name_kr: w.name?.ko_KR || '이름 없음',
         });
