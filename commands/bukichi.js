@@ -33,7 +33,7 @@ module.exports = {
                 const nameKr = w.mainWeaponInfo?.name_kr;
                 if (!nameJa || !nameKr) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
 
-                const subText = nameKr ? `\n┗ > *${nameKr}*` : '';
+                const subText = nameKr ? `\n┗  > *${nameKr}*` : '';
 
                 return `**${teamName} ${index + 1}**\n┗ 🔫${nameJa}\n${subText}\n`;
             }).join('\n');
