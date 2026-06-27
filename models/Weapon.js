@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 // 데이터베이스에 저장될 스플래툰 무기 데이터의 규칙(틀)을 정의합니다.
 const weaponSchema = new mongoose.Schema({
   name: { type: String, required: true },          // 무기 한국어 이름

@@ -28,7 +28,6 @@ module.exports = async function deployCommands(clientId) {
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
     console.log(globalCommands.length, guildCommands.length);
     try {
-        const CLIENT_ID = process.env.CLIENT_ID;
         const TEST_GUILD_ID = process.env.TEST_GUILD_ID;
 
         // 1. 글로벌 명령어 등록

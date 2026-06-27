@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const deployCommands = require('./deploy-commands.js'); 
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -52,5 +53,11 @@ client.on('interactionCreate', async interaction => {
         }
     }
 });
+
+const MONGO_URI = process.env.MONGO_URI;
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('🟢 [성공] 클라우드 MongoDB 데이터베이스와 완벽하게 연결되었습니다!'))
+    .catch(err => console.error('❌ [치명적 오류] 데이터베이스 주소가 틀렸거나 차단되었습니다:', err));
 
 client.login(process.env.DISCORD_TOKEN);
