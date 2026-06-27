@@ -15,19 +15,18 @@ module.exports = async function deployCommands() {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
     
-    if ('data' in command && 'execute' in command) {
-        // 💡 isGlobal 값에 따라 등록할 바구니를 분류합니다.
-        if (command.isGlobal) {
-        globalCommands.push(command.data.toJSON());
-        } else {
-        guildCommands.push(command.data.toJSON());
+        if ('data' in command && 'execute' in command) {
+            // 💡 isGlobal 값에 따라 등록할 바구니를 분류합니다.
+            if (command.isGlobal) {
+            globalCommands.push(command.data.toJSON());
+            } else {
+            guildCommands.push(command.data.toJSON());
+            }
         }
-        console.log(globalCommands, guildCommands);
-    }
     }
 
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-
+    console.log(globalCommands.length, guildCommands.length);
     try {
         const CLIENT_ID = process.env.CLIENT_ID;
         const TEST_GUILD_ID = process.env.TEST_GUILD_ID;
