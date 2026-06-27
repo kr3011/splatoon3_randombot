@@ -32,7 +32,7 @@ module.exports = {
                 const name = w.mainWeaponInfo?.name_ja;
                 if (!name) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
 
-                return `**${teamName} ${index + 1}**\n┗ 🔫${name}`;
+                return `**${teamName} ${index + 1}**\n┗ 🔫${name}\n`;
             }).join('\n');
         };
 
