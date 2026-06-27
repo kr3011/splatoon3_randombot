@@ -10,9 +10,6 @@ module.exports = {
     .setName('config')
     .setDescription('이 서버의 랜덤 매칭 무기 풀 설정을 관리합니다.')
     .addSubcommand(subcommand =>
-      subcommand.setName('menu').setDescription('카테고리별 무기 밴(BAN) 설정 메뉴판을 불러옵니다.')
-    )
-    .addSubcommand(subcommand =>
       subcommand.setName('status').setDescription('현재 이 서버에서 밴(제외)된 모든 무기 목록을 확인합니다.')
     ),
 
