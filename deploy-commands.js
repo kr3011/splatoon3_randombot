@@ -2,7 +2,7 @@ const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 
-module.exports = async function deployCommands() {
+module.exports = async function deployCommands(clientId) {
     
     const globalCommands = [];
     const guildCommands = [];
@@ -34,7 +34,7 @@ module.exports = async function deployCommands() {
         // 1. 글로벌 명령어 등록
         console.log('🌐 일반 명령어를 글로벌로 배포합니다...');
         await rest.put(
-        Routes.applicationCommands(client.user.id),
+        Routes.applicationCommands(clientId),
         { body: globalCommands }
         );
 
@@ -42,7 +42,7 @@ module.exports = async function deployCommands() {
         if (guildCommands.length > 0) {
             console.log('🔒 개발자 명령어를 테스트 서버에 배포합니다...');
             await rest.put(
-            Routes.applicationGuildCommands(client.user.id, TEST_GUILD_ID),
+            Routes.applicationGuildCommands(clientId, TEST_GUILD_ID),
             { body: guildCommands }
             );
         }

@@ -26,18 +26,13 @@ for (const file of commandFiles) {
     }
 }
 
-// 💡 v15 기준 clientReady 이벤트 내부를 이렇게 수정합니다.
-client.once('clientReady', (readyClient) => {
-    // 🟢 readyClient를 사용하면 'client is not defined' 에러를 완벽하게 방어할 수 있습니다.
-    console.log(`✅ [성공] ${readyClient.user.tag} 봇이 온라인 상태로 진입했습니다!`);
-    console.log('🤖 슬래시 명령어 백그라운드 자동 업데이트를 시작합니다...');
-    
-    // 💡 이미 안전하게 로그인 완료된 봇의 ID(readyClient.user.id)를 넘겨줍니다.
-    deployCommands(readyClient.user.id)
-        .then(() => console.log('🎉 명령어 분리 배포가 백그라운드에서 완료되었습니다.'))
-        .catch(err => console.error('❌ 백그라운드 명령어 배포 실패:', err));
+// 💡 갱신된 깔끔한 Ready 이벤트
+client.once('clientReady', async () => {
+    console.log(` ${client.user.tag} 봇이 성공적으로 준비되었습니다!`);
+    // 💡 여기서 명령어 등록 함수를 실행합니다.
+    console.log('🤖 슬래시 명령어 자동 업데이트를 시작합니다...');
+    await deployCommands(client.user.id); 
 });
-
 
 // 사용자가 슬래시 커맨드를 입력했을 때 수신하는 이벤트
 client.on('interactionCreate', async interaction => {
