@@ -23,7 +23,7 @@ async function syncSplatoonWeapons() {
   }
 
     // 🔥 [핵심 추가] 애초에 원본 배열에서 오더 시리즈와 히어로 슈터를 영구 퇴출(필터링)시킵니다!
-  externalWeapons = externalWeapons.filter(w => {
+  const filteredexternalWeapons = externalWeapons.filter(w => {
     const key = w.key?.toLowerCase() || '';
     // 히어로 슈터 레플리카 및 오더(order) 단어가 들어간 무기는 가차 없이 탈락(false)
     return key !== 'heroshooter_replica' && !key.includes('order');
@@ -42,7 +42,7 @@ async function syncSplatoonWeapons() {
   const specialMap = new Map();
 
   // 2. 먼저 원본 데이터를 돌면서 '서브웨폰'과 '스페셜웨폰'만 고유하게 추출하여 저장합니다.
-  for (const w of externalWeapons) {
+  for (const w of filteredexternalWeapons) {
     if (w.key) {
       if (!mainMap.has(w.key)) {
         // DB에 먼저 임시 생성하여 고유 ID(_id)를 발급받습니다.
@@ -83,7 +83,7 @@ async function syncSplatoonWeapons() {
   }
 
   // 2. 내 MongoDB 스키마 형식에 맞게 데이터 가공
-  const weaponListToSave = externalWeapons.map(w => {
+  const weaponListToSave = filteredexternalWeapons.map(w => {
     const key = w.key || 'none';
     const category = w.type?.key || 'none';
     const matching_range = Number(w.matching_range) || null;
