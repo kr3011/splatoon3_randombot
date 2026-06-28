@@ -40,7 +40,7 @@ module.exports = {
         }
 
         // 보내주신 변수 스타일 방식 그대로 밴 리스트 텍스트 조립
-        const banListText = setting.bannedWeapons.map((w, index) => {
+        const banListText = setting.bannedWeapons.slice(20).map((w, index) => {
           const nameJa = w.mainWeapon?.name_ja || w.name_ja || w.key;
           const nameKr = w.mainWeapon?.name_kr || w.name_kr ? `(${w.mainWeapon?.name_kr || w.name_kr})` : '';
           return `${index + 1}. 🚫 **${nameJa}** ${nameKr}`;
@@ -49,9 +49,9 @@ module.exports = {
         // 빨간색 밴 현황 전용 명찰 임베드 작성
         const statusEmbed = new EmbedBuilder()
           .setColor('#FF003C')
-          .setTitle('🚫 除外された武器リスト')
+          .setTitle('除外された武器リスト')
           .setDescription(`このサーバーでは、下記の **${setting.bannedWeapons.length}個** の武器は \`/bukichi\` ブキチ杯から除外されます。`)
-          .addFields({ name: '', value: banListText })
+          .addFields({ name: '', value: banListText + '\n...' })
           .setTimestamp();
 
         return await interaction.editReply({ embeds: [statusEmbed] });
