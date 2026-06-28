@@ -46,12 +46,14 @@ module.exports = {
           return `${index + 1}. 🚫 **${nameJa}** ${nameKr}`;
         }).join('\n');
 
+        const text = bannedWeapons.length > 20? banListText + '\n...' : banListText;
+
         // 빨간색 밴 현황 전용 명찰 임베드 작성
         const statusEmbed = new EmbedBuilder()
           .setColor('#FF003C')
           .setTitle('除外された武器リスト')
           .setDescription(`このサーバーでは、下記の **${setting.bannedWeapons.length}個** の武器は \`/bukichi\` ブキチ杯から除外されます。`)
-          .addFields({ name: '', value: banListText + '\n...' })
+          .addFields({ name: '', value: text })
           .setTimestamp();
 
         return await interaction.editReply({ embeds: [statusEmbed] });
