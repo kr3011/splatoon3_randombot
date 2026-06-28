@@ -12,7 +12,25 @@ async function fetchRandomWeapons(guildId) {
   // 💡 [핵심 교정] 직관적으로 바뀐 'bannedWeapons' 배열에 금지 무기가 들어있다면,
   // 그 ID들을 매칭 추첨에서 원천 배제($nin)하라는 명령 필터를 장착합니다!
   if (setting && setting.bannedWeapons && setting.bannedWeapons.length > 0) {
-    matchStage = { _id: { $nin: setting.bannedWeapons } }; 
+    // 안전한 비교를 위해 ObjectId 타입으로 확실하게 변환
+    const bannedIds = setting.bannedWeapons.map(id => 
+      id instanceof mongoose.Types.ObjectId ? id : new mongoose.Types.ObjectId(id)
+    );
+
+    matchStage = { _id: { $nin: bannedIds } }; 
+  }
+
+  // 💡 [추가] 밴 무기를 필터링하고 남은 실제 무기 개수를 계산하여 로그 출력
+  try {
+    const availableCount = await Weapon.countDocuments(matchStage);
+    console.log(`[Weapon Pool Check] 서버 ID: ${guildId} | 밴 제외 후 남은 무기 개수: ${availableCount}개`);
+    
+    // 만약 남은 무기가 4개보다 적다면 경고 로그 추가
+    if (availableCount < 4) {
+      console.warn(`⚠️ [경고] 남은 무기가 ${availableCount}개로 4개 미만입니다! 추첨에 실패하거나 중복이 발생할 수 있습니다.`);
+    }
+  } catch (error) {
+    console.error('❌ 무기 개수 확인 중 에러 발생:', error);
   }
 
   // 2. 필터링된 안전 무기 풀 안에서 4개 추출 공정 가동
