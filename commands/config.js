@@ -40,7 +40,7 @@ module.exports = {
         }
 
         // 보내주신 변수 스타일 방식 그대로 밴 리스트 텍스트 조립
-        const banListText = setting.bannedWeapons.slice(20).map((w, index) => {
+        const banListText = setting.bannedWeapons.slice(0, 20).map((w, index) => {
           const nameJa = w.mainWeapon?.name_ja || w.name_ja || w.key;
           const nameKr = w.mainWeapon?.name_kr || w.name_kr ? `(${w.mainWeapon?.name_kr || w.name_kr})` : '';
           return `${index + 1}. 🚫 **${nameJa}** ${nameKr}`;
