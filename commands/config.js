@@ -46,7 +46,7 @@ module.exports = {
           return `${index + 1}. 🚫 **${nameJa}** ${nameKr}`;
         }).join('\n');
 
-        const text = bannedWeapons.length > 20? banListText + '\n...' : banListText;
+        const text = setting.bannedWeapons.length > 20? banListText + '\n...' : banListText;
 
         // 빨간색 밴 현황 전용 명찰 임베드 작성
         const statusEmbed = new EmbedBuilder()
