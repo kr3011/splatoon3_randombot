@@ -37,7 +37,7 @@ module.exports = {
 
                     const emoji = emojiMap.get('52gal');
 
-                    return `**${teamName} ${index + 1}**\n┗${emoji}${nameJa}\n\u200B \u200B \u200B \u200B \u200B \u200B *${nameKr}*\n`;
+                    return `###**${teamName} ${index + 1}**\n###┖${emoji}${nameJa}\n\u200B \u200B \u200B \u200B \u200B \u200B *${nameKr}*\n`;
                 }).join('\n');
             };
 
