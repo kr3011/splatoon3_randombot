@@ -23,6 +23,8 @@ module.exports = {
             const alphaTeam = teams[0];
             const bravoTeam = teams[1];
 
+            console.log(alphaTeam[0]);
+
             // 만약 데이터베이스가 비어있어 4개를 못 채웠다면 예외 처리
             if (alphaTeam.length < 4 || bravoTeam.length < 4) {
                 return await interaction.editReply('❌ 武器データが存在しません。 `/fetch` を実行し、データを更新してください。');
@@ -35,9 +37,9 @@ module.exports = {
                     const nameKr = w.mainWeaponInfo?.name_kr;
                     if (!nameJa || !nameKr) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
 
-                    const emoji = emojiMap.get(w.key);
+                    const emoji = emojiMap.get(w.key) || '🔫';
 
-                    return `###**${teamName} ${index + 1}**\n###┖${emoji}${nameJa}\n\u200B \u200B \u200B \u200B \u200B \u200B *${nameKr}*\n`;
+                    return `**${teamName} ${index + 1}**\n┖${emoji}${nameJa}\n\u200B \u200B \u200B \u200B \u200B \u200B *${nameKr}*\n`;
                 }).join('\n');
             };
 

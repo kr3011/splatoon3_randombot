@@ -33,7 +33,7 @@ async function fetchRandomWeapons(guildId) {
   return await Weapon.aggregate([
     { $match: matchStage },   // 🚫 밴 당한 무기들을 걸러내는 1번 레일 공정
     { $sample: { size: 4 } }, // 💡 8개 대신 4개만 추출
-        {
+    {
       $lookup: {
         from: 'mainweapons',
         localField: 'mainWeapon',
