@@ -14,6 +14,9 @@ module.exports = {
     )
     .addSubcommand(subcommand =>
       subcommand.setName('status').setDescription('このサーバーの武器リストの設定を確認します。')
+    )
+    .addSubcommand(subcommand =>
+      subcommand.setName('reset').setDescription('選択している除外武器リストを初期化(削除)します。')
     ),
 
   async execute(interaction) {
