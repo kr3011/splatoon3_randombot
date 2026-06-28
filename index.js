@@ -27,12 +27,28 @@ for (const file of commandFiles) {
 
 // 💡 [교정 1] 이벤트 이름을 디스코드 표준 규격인 'ready'로 수정합니다.
 client.once('ready', async () => {
+    client.emojiMap = new Map();
+
     console.log(`📡 ${client.user.tag} 봇이 성공적으로 준비되었습니다!`);
     console.log('🤖 슬래시 명령어 자동 업데이트를 시작합니다...');
     try {
         await deployCommands(client.user.id); 
     } catch (e) {
         console.error('명령어 배포 실패:', e);
+    }
+
+    try {
+        // 봇 자체(애플리케이션)에 등록된 이모지 목록을 서버 ID 없이 통째로 가져옴
+        const appEmojis = await client.application.emojis.fetch();
+        
+        appEmojis.forEach(emoji => {
+        // 맵에 '무기이름': '<:무기이름:이모지ID>' 형태로 저장
+        client.emojiMap.set(emoji.name, emoji.toString());
+        });
+        
+        console.log(`✅ 애플리케이션 이모지 ${client.emojiMap.size}개 로드 완료!`);
+    } catch (error) {
+        console.error("이모지 로드 실패:", error);
     }
 });
 

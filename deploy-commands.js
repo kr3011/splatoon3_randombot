@@ -18,9 +18,9 @@ module.exports = async function deployCommands(clientId) {
         if ('data' in command && 'execute' in command) {
             // 💡 isGlobal 값에 따라 등록할 바구니를 분류합니다.
             if (command.isGlobal) {
-            globalCommands.push(command.data.toJSON());
+                globalCommands.push(command.data.toJSON());
             } else {
-            guildCommands.push(command.data.toJSON());
+                guildCommands.push(command.data.toJSON());
             }
         }
     }
@@ -33,16 +33,16 @@ module.exports = async function deployCommands(clientId) {
         // 1. 글로벌 명령어 등록
         console.log('🌐 일반 명령어를 글로벌로 배포합니다...');
         await rest.put(
-        Routes.applicationCommands(clientId),
-        { body: globalCommands }
+            Routes.applicationCommands(clientId),
+            { body: globalCommands }
         );
 
         // 2. 테스트 서버 명령어 등록
         if (guildCommands.length > 0) {
             console.log('🔒 개발자 명령어를 테스트 서버에 배포합니다...');
             await rest.put(
-            Routes.applicationGuildCommands(clientId, TEST_GUILD_ID),
-            { body: guildCommands }
+                Routes.applicationGuildCommands(clientId, TEST_GUILD_ID),
+                { body: guildCommands }
             );
         }
         console.log('🎉 모든 슬래시 명령어 분리 배포 완료!');
