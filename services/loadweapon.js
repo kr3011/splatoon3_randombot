@@ -26,7 +26,7 @@ async function syncSplatoonWeapons() {
   const filteredexternalWeapons = externalWeapons.filter(w => {
     const key = w.key?.toLowerCase() || '';
     // 히어로 슈터 레플리카 및 오더(order) 단어가 들어간 무기는 가차 없이 탈락(false)
-    return key !== 'heroshooter_replica' && !key.includes('order');
+    return key !== 'heroshooter_replica' && key !== 'octoshooter_replica' && !key.includes('order');
   });
 
   // 💡 [핵심 수정] 낡은 뼈대 규칙(인덱스 캐시)까지 아예 통째로 폭파(Drop)합니다.
