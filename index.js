@@ -73,9 +73,9 @@ client.on('interactionCreate', async interaction => {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'brella' || w.category === 'wiper');
                 } else if (customId === 'config_sloshers') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'slosher');
-                } else if (customId === 'config_splatlings') {
+                } else if (customId === 'config_spinners') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'spinner'); // DB 저장 카테고리명 대조 확인
-                } else if (customId === 'config_dualies') {
+                } else if (customId === 'config_maneuvers') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'maneuver'); // DB 저장 카테고리명 대조 확인
                 } else if (customId === 'config_stringers') {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'stringer');

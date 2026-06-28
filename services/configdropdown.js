@@ -76,11 +76,11 @@ async function generateConfigMenuRows(guildId) {
 
     // 🎰 Row 4: 차저 메뉴판
     const menu4 = new StringSelectMenuBuilder().setCustomId('config_chargers').setPlaceholder('🚫 チャージャー').setMinValues(0);
-    addCleanOptions(menu4, chargers, 'CHARGERS');
+    addCleanOptions(menu4, chargers, 'CHARGER');
 
     // 🎰 Row 5: 블래스터 통합 메뉴판
     const menu5 = new StringSelectMenuBuilder().setCustomId('config_blasters').setPlaceholder('🚫 ブラスター').setMinValues(0);
-    addCleanOptions(menu5, blasters, 'BLASTERS');
+    addCleanOptions(menu5, blasters, 'BLASTER');
 
     
     // 🎰 Row 6: 브렐라 & 와이퍼 통합 메뉴판
