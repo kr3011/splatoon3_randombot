@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { GuildSetting } = require('../models');
+const { GuildSetting, Weapon } = require('../models');
 const { generateConfigMenuRows } = require('../services/configdropdown'); // 💡 1단계 분리형 서비스 임포트
 
 module.exports = {
@@ -84,6 +84,29 @@ module.exports = {
           ephemeral: true
         });
       }
+
+      // =================================================================
+      // 🔄 시나리오 C: 유저가 [/config reset] 을 입력했을 때 (제외 명단 초기화)
+      // =================================================================
+      if (subcommand === 'reset') {
+        await interaction.deferReply();
+
+        // 스키마 구조에 맞게 String 배열을 빈 배열([])로 초기화합니다.
+        await GuildSetting.findOneAndUpdate(
+          { guildId },
+          { $set: { bannedWeapons: [] } },
+          { new: true, upsert: true }
+        );
+
+        const resetEmbed = new EmbedBuilder()
+          .setColor('#00FF66')
+          .setTitle('⚙️ 除外リストの初期化完了')
+          .setDescription('このサーバーのブキチ杯除外武器リストが**すべて初期化**されました。\nこれからはすべての武器が抽選に登場します。')
+          .setTimestamp();
+
+        return await interaction.editReply({ embeds: [resetEmbed] });
+      }
+
 
     } catch (error) {
       console.error('❌ config 가동 중 치명적 에러 감지:', error);
