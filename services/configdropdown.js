@@ -48,8 +48,8 @@ async function generateConfigMenuRows(guildId) {
             menu.addOptions(
                 new StringSelectMenuOptionBuilder()
                 .setLabel(`${String(labelText).trim()} ${labelKr ? `| ${String(labelKr).trim()}` : ''}`)
-                .setValue(w._id.toString())
-                .setDefault(bannedIds.includes(w._id.toString())) // 💡 밴 목록에 있으면 자동으로 파란 체크 유지
+                .setValue(w.key)
+                .setDefault(bannedIds.includes(w.key)) // 💡 밴 목록에 있으면 자동으로 파란 체크 유지
             );
         });
 

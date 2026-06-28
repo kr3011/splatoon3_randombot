@@ -6,10 +6,7 @@ const guildSettingSchema = new mongoose.Schema({
   
   // 💡 이 서버에서 매칭에 포함할 무기들의 ObjectId 외래키 배열
   // 아무것도 설정하지 않았다면 기본값으로 모든 무기를 사용하도록 빈 배열로 둡니다.
-  bannedWeapons: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Weapon' 
-  }]
+  bannedWeapons: [{ type: String }]
 }, { versionKey: false });
 
 module.exports = mongoose.model('GuildSetting', guildSettingSchema);

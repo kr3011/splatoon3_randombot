@@ -81,27 +81,24 @@ client.on('interactionCreate', async interaction => {
                     currentMenuCategoryWeapons = allWeapons.filter(w => w.category === 'stringer');
                 }
 
-                const currentMenuWeaponIds = currentMenuCategoryWeapons.map(w => w._id.toString());
-
                 // 만약 철자 문제로 무기를 하나도 못 찾았다면 연산을 스킵해 기존 데이터를 보호합니다.
-                if (currentMenuWeaponIds.length === 0) {
+                if (currentMenuCategoryWeapons.length === 0) {
                     console.warn(`⚠️ [매핑 불일치 경고] customId인 [${customId}] 그룹의 무기를 DB에서 찾지 못했습니다.`);
                     return;
                 }
 
-                let existingBannedIds = setting.bannedWeapons.map(id => id.toString());
-
+                const currentCategoryKeys = currentMenuCategoryWeapons.map(w => w.key);
                 // 현재 조작 중인 카테고리 영역만 도화지 청소 (차집합)
-                existingBannedIds = existingBannedIds.filter(id => !currentMenuWeaponIds.includes(id));
+                let existingBannedKeys = (setting.bannedWeapons || []).filter(key => !currentCategoryKeys.includes(key));
 
                 // 유저가 새롭게 체크를 유지한 ID들만 추가
-                values.forEach(id => {
-                    if (id !== 'none' && !existingBannedIds.includes(id)) {
-                        existingBannedIds.push(id);
+                values.forEach(key => {
+                    if (key !== 'none' && !existingBannedKeys.includes(key)) {
+                        existingBannedKeys.push(key);
                     }
                 });
 
-                setting.bannedWeapons = existingBannedIds;
+                setting.bannedWeapons = existingBannedKeys;
                 await setting.save();
                 
                 console.log(`[🚫 밴 설정 갱신완료] 서버 ID: ${guildId} | 현재 총 밴 무기 수: ${setting.bannedWeapons.length}개`);
