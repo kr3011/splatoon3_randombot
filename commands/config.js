@@ -30,17 +30,22 @@ module.exports = {
         await interaction.deferReply();
 
         // 이 서버의 밴 설정을 가져오면서 외래키인 Weapon 방과 그 안의 이름 방(mainWeapon)까지 일제히 결합
-        const setting = await GuildSetting.findOne({ guildId }).populate({
-          path: 'bannedWeapons',
-          populate: { path: 'mainWeapon' }
-        });
+        const setting = await GuildSetting.findOne({ guildId });
 
         if (!setting || !setting.bannedWeapons || setting.bannedWeapons.length === 0) {
           return await interaction.editReply('🕊️ **除外されている武器がありません。**\nすべての武器が登場します。');
         }
 
-        // 보내주신 변수 스타일 방식 그대로 밴 리스트 텍스트 조립
-        const banListText = setting.bannedWeapons.slice(0, 20).map((w, index) => {
+        // 2. 💡 [오류 수정 부] 스키마 구조상 populate가 안 되므로, Weapon 컬렉션에서 실제 무기 정보들을 직접 조회합니다.
+        const bannedKeys = setting.bannedWeapons;
+        const weaponsData = await Weapon.find({ key: { $in: bannedKeys } }).populate('mainWeapon');
+
+        // DB 순서가 꼬이지 않도록 유저가 밴한 순서(또는 저장된 순서)대로 정렬하여 텍스트 조립
+        const banListText = bannedKeys.slice(0, 20).map((key, index) => {
+          const w = weaponsData.find(item => item.key === key);
+          
+          if (!w) return `${index + 1}. 🚫 **${key}** (데이터 없음)`;
+
           const nameJa = w.mainWeapon?.name_ja || w.name_ja || w.key;
           const nameKr = w.mainWeapon?.name_kr || w.name_kr ? `(${w.mainWeapon?.name_kr || w.name_kr})` : '';
           return `${index + 1}. 🚫 **${nameJa}** ${nameKr}`;
