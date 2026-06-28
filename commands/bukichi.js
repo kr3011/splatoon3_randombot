@@ -37,7 +37,7 @@ module.exports = {
                     const nameKr = w.mainWeaponInfo?.name_kr;
                     if (!nameJa || !nameKr) throw new Error('CONFIG_EMPTY_OR_INVALID_WEAPON');
 
-                    const emoji = emojiMap.get(w.key) || '🔫';
+                    const emoji = emojiMap.get(w.category + '_' + w.key) || '🔫';
 
                     return `**${teamName} ${index + 1}**\n┖${emoji}${nameJa}\n\u200B \u200B \u200B \u200B \u200B \u200B *${nameKr}*\n`;
                 }).join('\n');
