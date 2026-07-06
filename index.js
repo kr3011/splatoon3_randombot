@@ -14,13 +14,15 @@ const path = require('path');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 
+console.log(process.env.DISCORD_TOKEN);
+
 // mongo
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('🟢 [성공] 클라우드 MongoDB 데이터베이스와 완벽하게 연결되었습니다!'))
     .catch(err => console.error('❌ [치명적 오류] 데이터베이스 주소가 틀렸거나 차단되었습니다:', err));
 
-client.login(process.env.DISCORD_TOKEN);
+
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -153,3 +155,4 @@ client.on('interactionCreate', async interaction => {
 });
 
 
+client.login(process.env.DISCORD_TOKEN);
