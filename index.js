@@ -5,11 +5,11 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Render 유지용 가짜 웹서버 
-http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Bot is running!\n');
-}).listen(process.env.PORT || 3000);
+// // Render 유지용 가짜 웹서버 
+// http.createServer((req, res) => {
+//     res.writeHead(200, { 'Content-Type': 'text/plain' });
+//     res.end('Bot is running!\n');
+// }).listen(process.env.PORT || 3000);
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
